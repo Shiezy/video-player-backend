@@ -19,6 +19,10 @@ public class DirectVideoService {
     }
 
     public List<Video> findAll() {
-        return videoRepo.findAll();
+        List<Video> videoList = videoRepo.findAll();
+        
+        videoList.removeIf(video -> !"COMPLETED".equals(video.getVideoStatus()));
+        
+        return videoList;
     }
 }

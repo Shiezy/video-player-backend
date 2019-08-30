@@ -127,4 +127,9 @@ public class VideoResource {
         return videoService.findAll();
     }
 
+    @RequestMapping("/videos")
+    public List<Video> getVideos() {
+        return directVideoService.findAll();
+    }
+
 }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <h1 th:bgcolor="gray">Welcome Home</h1>
+
+<form method="post" action="/api/uploadImage" enctype="multipart/form-data">
+
+    <input type="file" name="files" multiple>
+
+    <input type="submit" name="Upload Files">
+
+</form>
+</body>
+</html>

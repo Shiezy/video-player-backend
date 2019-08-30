@@ -1,7 +1,6 @@
 package com.domie.streamer.Model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -23,11 +22,15 @@ public class Video {
 
     private String videoOriginalName;
 
-    private String videoUrl;
+    private String videoUrl; // manifest
 
     private String videoType;
 
     private long videoSize;
+
+    private String videoStatus; // IN_PROGRESS, DELETED, COMPLETED
+
+    private String folder;
 
     @Transient
     private MultipartFile video;
@@ -36,13 +39,14 @@ public class Video {
     }
 
 
-    public Video(String videoName, String videoLength, String videoOriginalName, String videoUrl, String videoType, long videoSize) {
+    public Video(String videoName, String videoLength, String videoOriginalName, String videoUrl, String videoType, long videoSize, String videoStatus) {
         this.videoName = videoName;
         this.videoLength = videoLength;
         this.videoOriginalName = videoOriginalName;
         this.videoUrl = videoUrl;
         this.videoType = videoType;
         this.videoSize = videoSize;
+        this.videoStatus = videoStatus;
     }
 
     public Long getId() {
@@ -109,6 +113,22 @@ public class Video {
         this.video = video;
     }
 
+    public String getVideoStatus() {
+        return videoStatus;
+    }
+
+    public void setVideoStatus(String videoStatus) {
+        this.videoStatus = videoStatus;
+    }
+
+    public String getFolder() {
+        return folder;
+    }
+
+    public void setFolder(String folder) {
+        this.folder = folder;
+    }
+
     @Override
     public String toString() {
         return "Video{" +
@@ -119,6 +139,7 @@ public class Video {
                 ", videoUrl='" + videoUrl + '\'' +
                 ", videoType='" + videoType + '\'' +
                 ", videoSize=" + videoSize +
+                ", videoStatus='" + videoStatus + '\'' +
                 ", video=" + video +
                 '}';
     }

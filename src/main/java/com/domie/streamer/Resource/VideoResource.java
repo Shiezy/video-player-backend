@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class VideoResource {
+
 
     @Value("${file.storage.videos}")
     private String videoDir;
@@ -54,19 +56,23 @@ public class VideoResource {
     @RequestMapping(value = "/file/upload/", method = RequestMethod.POST)
     public ResponseEntity upload(@RequestParam("file") MultipartFile file) {
         FileUploadDTO fileUploadDTO = null;
+
         try {
             fileUploadDTO = uploadService.uploadFile(file);
+
+            String videoUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/file/").path(fileUploadDTO.getFolder()).path("/Manifest.mpd").toUriString();
 
             Video video = new Video();
             video.setVideoName(fileUploadDTO.getFileName());
             video.setVideoOriginalName(fileUploadDTO.getOriginalFileName());
             video.setVideoSize(fileUploadDTO.getSize());
-            // video.setVideoUrl(fileUploadDTO.getFolder());
+            video.setVideoUrl(videoUrl);
             video.setFolder(fileUploadDTO.getFolder());
             video.setVideoStatus("IN_PROGRESS");
 
             // save video
             video = directVideoService.save(video);
+
 
             Boolean segmentationStatus;
             // segment Video

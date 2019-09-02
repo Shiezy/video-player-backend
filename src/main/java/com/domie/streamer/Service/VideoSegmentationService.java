@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 @Service
 public class VideoSegmentationService {
@@ -32,19 +33,51 @@ public class VideoSegmentationService {
             manifestFiles.add(destVideoHighQualityFileName);
             manifestFiles.add(destVideoLowQualityFileName);
 
+            CountDownLatch latch = new CountDownLatch(3);
+
             // create Audio
-            AudioUtil.extractAudio(srcFileName, destAudioFileName);
+            new Thread(() -> {
+                try {
+                    AudioUtil.extractAudio(srcFileName, destAudioFileName);
+                    latch.countDown();
+                } catch (InterruptedException | IOException e) {
+                    System.out.println("Encountered Exception " + e.getLocalizedMessage());
+                }
+            }).start();
 
 
             // create HighQuality Video
-            VideoHighQualityUtil.extractVideo5000(srcFileName, destVideoHighQualityFileName);
+            new Thread(() -> {
+                try {
+                    VideoHighQualityUtil.extractVideo5000(srcFileName, destVideoHighQualityFileName);
+                    latch.countDown();
+                } catch (InterruptedException | IOException e) {
+                    System.out.println("Encountered Exception " + e.getLocalizedMessage());
+                }
+            }).start();
 
             // create LowQuality Video
-            VideoLowQualityUtil.extractVideo2000(srcFileName, destVideoLowQualityFileName);
+            new Thread(() -> {
+                try {
+                    VideoLowQualityUtil.extractVideo2000(srcFileName, destVideoLowQualityFileName);
+                    latch.countDown();
+                } catch (InterruptedException | IOException e) {
+                    System.out.println("Encountered Exception " + e.getLocalizedMessage());
+                }
+            }).start();
 
 
             /// create manifest
+            latch.await();
             CreateManifestUtil.createManifest(manifestFiles, manifestFileName);
+        }
+    }
+
+    public void createManifest(List<String> manifestFiles, String manifestFileName, int count) throws IOException, InterruptedException {
+        if (count == 3) {
+            CreateManifestUtil.createManifest(manifestFiles, manifestFileName);
+
+
         }
     }
 }

@@ -79,7 +79,7 @@ public class VideoResource {
             Video finalVideo = video;
             new Thread(() -> {
                 try {
-                    videoSegmentationService.segmentVideo(finalVideo);
+                    videoSegmentationService.encodeAndSegment(finalVideo);
                     finalVideo.setVideoStatus("COMPLETED");
                 } catch (IOException | InterruptedException e) {
                     finalVideo.setVideoStatus("FAILED");

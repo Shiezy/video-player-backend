@@ -5,7 +5,7 @@ import java.io.IOException;
 public class MP4Encoder {
     public static void encode(String srcFileName, String destFileName) throws IOException, InterruptedException {
         // ffmpeg -i LostInTranslation.mkv -codec copy LostInTranslation.mp4
-        String cmd = "ffmpeg -i " + srcFileName + " -codec copy " + destFileName;
+        String cmd = "ffmpeg -i " + srcFileName + " -codec copy -an " + destFileName;
 
         System.out.println("CMD: " + cmd);
 

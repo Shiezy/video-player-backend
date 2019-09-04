@@ -73,20 +73,36 @@ public class VideoSegmentationService {
 
     public void encodeAndSegment(Video video) throws IOException, InterruptedException {
         String srcFileName = mediaFolder + "/" + video.getVideoName();
+        
         String destMP4FileName = mediaFolder + "/" + video.getVideoName() + ".mp4";
         String destMP4_540FileName = mediaFolder + "/" + video.getVideoName() + "-540.mp4";
         String destMP4_360FileName = mediaFolder + "/" + video.getVideoName() + "-360.mp4";
         String destMP4_240FileName = mediaFolder + "/" + video.getVideoName() + "-240.mp4";
+        String destAudioFileName = mediaFolder + "/" + video.getVideoName() + "_audio.m4a";
 
         String manifestFileName = mediaFolder + "/" + video.getFolder() + "/" + "Manifest.mpd";
         List<String> manifestFiles = new ArrayList<>();
 
-        // first encode to mp4
+        // first encode to mp4 - without audio
         MP4Encoder.encode(srcFileName, destMP4FileName);
 
         CountDownLatch latch = new CountDownLatch(3);
 
+        // create Audio
+        new Thread(() -> {
+            try {
+                System.out.println("Started Extracting Audio");
+                AudioUtil.extractAudio(srcFileName, destAudioFileName);
+                manifestFiles.add(destAudioFileName);
+                System.out.println("Finished Extracting Audio");
+                latch.countDown();
+            } catch (InterruptedException | IOException e) {
+                System.out.println("Encountered Exception " + e.getLocalizedMessage());
+            }
+        }).start();
+
         // create res 540
+        /*
         new Thread(() -> {
             try {
                 System.out.println("Started creating Res 540");
@@ -98,7 +114,7 @@ public class VideoSegmentationService {
                 System.out.println("Encountered Exception " + e.getLocalizedMessage());
             }
         }).start();
-
+*/
         // create res 360
         new Thread(() -> {
             try {

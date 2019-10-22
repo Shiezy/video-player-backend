@@ -84,10 +84,14 @@ public class VideoSegmentationService {
         String destAudioFileName = mediaFolder + "/" + video.getVideoName() + "_audio.m4a";
 
         String manifestFileName = mediaFolder + "/" + video.getFolder() + "/" + "Manifest.mpd";
+		String destThumbnailFileName = mediaFolder + "/" + video.getFolder() + "/" + "poster.png";
         List<String> manifestFiles = new ArrayList<>();
 
         // first encode to mp4 - without audio
         MP4Encoder.encode(srcFileName, destMP4FileName);
+
+        //create a thumbnail from the video
+		CreateThumbnail.createThumbNail(srcFileName, destThumbnailFileName);
 
         CountDownLatch latch = new CountDownLatch(3);
 

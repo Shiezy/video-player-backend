@@ -22,6 +22,8 @@ public class Video {
 
     private String videoOriginalName;
 
+    private String imageUrl;
+
     private String videoUrl; // manifest
 
     private String videoType;
@@ -39,10 +41,11 @@ public class Video {
     }
 
 
-    public Video(String videoName, String videoLength, String videoOriginalName, String videoUrl, String videoType, long videoSize, String videoStatus) {
+    public Video(String videoName, String videoLength, String videoOriginalName, String imageUrl, String videoUrl, String videoType, long videoSize, String videoStatus) {
         this.videoName = videoName;
         this.videoLength = videoLength;
         this.videoOriginalName = videoOriginalName;
+        this.imageUrl = imageUrl;
         this.videoUrl = videoUrl;
         this.videoType = videoType;
         this.videoSize = videoSize;
@@ -79,6 +82,14 @@ public class Video {
 
     public void setVideoOriginalName(String videoOriginalName) {
         this.videoOriginalName = videoOriginalName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getVideoUrl() {

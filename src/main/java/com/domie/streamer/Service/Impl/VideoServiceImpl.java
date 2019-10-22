@@ -34,8 +34,8 @@ public class VideoServiceImpl implements VideoService {
     public Video saveVideo(VideoDB videoDB, @RequestParam("file") MultipartFile multipartFile) {
 
         String videoUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/video/").path(multipartFile.getOriginalFilename()).toUriString();
-
-        Video vid = new Video(videoDB.getVideoName(), videoDB.getVideoLength(), multipartFile.getOriginalFilename(), videoUrl, multipartFile.getContentType(), multipartFile.getSize(), "NEW");
+        String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/video/").path(multipartFile.getOriginalFilename()).toUriString();
+        Video vid = new Video(videoDB.getVideoName(), videoDB.getVideoLength(), multipartFile.getOriginalFilename(), imageUrl, videoUrl, multipartFile.getContentType(), multipartFile.getSize(), "NEW");
 
         Video video = videoRepo.save(vid);
 
@@ -43,7 +43,7 @@ public class VideoServiceImpl implements VideoService {
             storeVideo(multipartFile);
             return video;
         } else
-            return new Video("N/A", "N/A", "N/A", "N/A", "N/A", 0, "");
+            return new Video("N/A", "N/A", "N/A", "N/A", "N/A", "N/A", 0, "");
     }
 
     @Override

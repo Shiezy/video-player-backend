@@ -61,11 +61,13 @@ public class VideoResource {
             fileUploadDTO = uploadService.uploadFile(file);
 
             String videoUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/file/").path(fileUploadDTO.getFolder()).path("/Manifest.mpd").toUriString();
+            String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/file/").path(fileUploadDTO.getFolder()).path("/poster.png").toUriString();
 
             Video video = new Video();
             video.setVideoName(fileUploadDTO.getFileName());
             video.setVideoOriginalName(fileUploadDTO.getOriginalFileName());
             video.setVideoSize(fileUploadDTO.getSize());
+            video.setImageUrl(imageUrl);
             video.setVideoUrl(videoUrl);
             video.setFolder(fileUploadDTO.getFolder());
             video.setVideoStatus("IN_PROGRESS");

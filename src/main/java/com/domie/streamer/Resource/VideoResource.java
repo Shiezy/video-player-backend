@@ -138,4 +138,11 @@ public class VideoResource {
         return directVideoService.findAll();
     }
 
+    @RequestMapping("/video/{id}")
+    public Video getVideo(@PathVariable("id") Long id) {
+
+        return directVideoService.findOne(id);
+
+    }
+
 }

@@ -25,4 +25,8 @@ public class DirectVideoService {
         
         return videoList;
     }
+
+    public Video findOne(Long id) {
+        return videoRepo.findById(id).orElse(null);
+    }
 }

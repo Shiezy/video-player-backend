@@ -7,6 +7,7 @@ import com.domie.streamer.Service.UploadService;
 import com.domie.streamer.Service.VideoSegmentationService;
 import com.domie.streamer.Service.VideoService;
 import com.domie.streamer.Service.dto.FileUploadDTO;
+import com.domie.streamer.Service.util.CreateThumbnail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,6 +71,11 @@ public class VideoResource {
             video.setImageUrl(imageUrl);
             video.setVideoUrl(videoUrl);
             video.setFolder(fileUploadDTO.getFolder());
+//            saving the video duration
+            String mediaFolder = "/apps/media";
+            String srcFileName = mediaFolder + "/" + video.getVideoName();
+            video.setDuration(CreateThumbnail.getVideoDuration(srcFileName));
+
             video.setVideoStatus("IN_PROGRESS");
 
             // save video

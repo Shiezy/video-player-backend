@@ -19,8 +19,6 @@ public class FileUploadDTO {
 
     private String folder;
 
-    private  StringBuilder duration;
-
 
 
     public FileUploadDTO() {
@@ -90,13 +88,7 @@ public class FileUploadDTO {
         this.folder = folder;
     }
 
-    public StringBuilder getDuration() {
-        return duration;
-    }
 
-    public void setDuration(StringBuilder duration) {
-        this.duration = duration;
-    }
 
     @Override
     public String toString() {
@@ -109,7 +101,6 @@ public class FileUploadDTO {
                 ", name='" + name + '\'' +
                 ", size=" + size +
                 ", folder='" + folder + '\'' +
-                ", duration='" + duration + '\'' +
                 '}';
     }
 }

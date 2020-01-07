@@ -34,7 +34,7 @@ public class Video {
 
     private String folder;
 
-    private StringBuilder duration;
+    private String duration;
 
     @Transient
     private MultipartFile video;
@@ -142,11 +142,11 @@ public class Video {
         this.folder = folder;
     }
 
-    public StringBuilder getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(StringBuilder duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

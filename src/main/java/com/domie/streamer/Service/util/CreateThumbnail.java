@@ -21,7 +21,7 @@ public class CreateThumbnail  {
 		p.destroy();
 	}
 
-	public static StringBuilder getVideoDuration(String srcFile) throws InterruptedException, IOException {
+	public static String getVideoDuration(String srcFile) throws InterruptedException, IOException {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 
 		processBuilder.command("bash", "-c", "ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 " +srcFile);
@@ -34,12 +34,12 @@ public class CreateThumbnail  {
 
 		String line;
 		while ((line = reader.readLine()) != null) {
-			output.append(line + "\n");
+			output.append(line);
 		}
 
 		int exitVal = process.waitFor();
 		if (exitVal == 0)
-			System.out.println("Success!");
-			return output;
+			System.out.println("Success! duration is :"+ output.toString());
+			return output.toString();
 	}
 }

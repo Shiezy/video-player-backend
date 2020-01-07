@@ -125,9 +125,11 @@ public class VideoResource {
 
             System.out.println("mimeType = " + mimeType);
 
+
             byte[] media = uploadService.getFile(videoFile);
 
             headers.setContentType(MediaType.valueOf(mimeType));
+
 
             return new ResponseEntity<>(media, headers, HttpStatus.OK);
         } catch (IOException e) {
@@ -143,6 +145,7 @@ public class VideoResource {
 
     @RequestMapping("/videos")
     public List<Video> getVideos() {
+    	Video video = new Video();
         return directVideoService.findAll();
     }
 

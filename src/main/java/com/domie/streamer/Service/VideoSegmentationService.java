@@ -2,14 +2,15 @@ package com.domie.streamer.Service;
 
 import com.domie.streamer.Model.Video;
 import com.domie.streamer.Service.util.*;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
 @Service
@@ -101,8 +102,13 @@ public class VideoSegmentationService {
         System.out.println("Started creating manifest");
         CreateManifestUtil.createManifest(manifestFiles, manifestFileName);
         System.out.println("Finished creating manifest");
-
         System.out.println("Finished the video segmentation process at :" + LocalTime.now());
 
+//        delete the videos that are no longer in use
+        Files.deleteIfExists(Paths.get(srcFileName));
+        Files.deleteIfExists(Paths.get(destMP4FileName));
+        Files.deleteIfExists(Paths.get(destMP4_240FileName));
+        Files.deleteIfExists(Paths.get(destMP4_360FileName));
+//        Files.deleteIfExists(Paths.get(destMP4_540FileName));
     }
 }

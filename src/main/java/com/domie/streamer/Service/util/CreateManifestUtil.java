@@ -16,7 +16,8 @@ public class CreateManifestUtil {
         String combinedFiles = stringBuilder.toString();
 
         // MP4Box -dash 4000 -frag 4000 -rap -bs-switching no -profile dashavc264:live -url-template girl_5000.mp4 girl_2000.mp4 girl_audio.m4a -out output/Manifest.mpd
-        String cmd = "MP4Box -dash 4000 -frag 4000 -rap -bs-switching no -profile dashavc264:live -url-template  " + combinedFiles + " -out " + manifestFile;
+//        String cmd = "MP4Box -dash 4000 -frag 4000 -rap -bs-switching no -profile dashavc264:live -url-template  " + combinedFiles + " -out " + manifestFile;
+        String cmd = "MP4Box -dash 4000 -frag 4000 -bs-switching no -profile dashavc264:live -url-template  " + combinedFiles + " -out " + manifestFile;
 
 //        String cmd = "MP4Box -dash 2000 -rap -frag-rap -profile live -url-template " + combinedFiles + " -out " + manifestFile;
         System.out.println("CMD: " + cmd);
